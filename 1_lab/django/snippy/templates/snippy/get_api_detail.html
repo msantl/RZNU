@@ -1,0 +1,120 @@
+<!-- TODO -->
+<body>
+    <table>
+        <tr>
+            <th>Resurs</th>
+            <th>Metode</th>
+        </tr>
+        <tr>
+            <td>/users/</td>
+            <td>
+                <table>
+                    <tr>
+                        <th>Tip</th>
+                        <th>Ostvarenje</th>
+                    </tr>
+                        <td>Create</td>
+                        <td>POST - stvara novog korisnika ako se u zahtjevu
+                            nalazi login podaci administratora. U zahtjevu je
+                            potrebno poslati username i password.</td>
+                    <tr>
+                        <td>Read</td>
+                        <td>GET - vraca JSON objekt koji sadrzi id i username
+                            svih korisnika</td>
+                    </tr>
+                    <tr>
+                        <td>Update</td>
+                        <td>PUT - korisniku ciji id je zadan promijeni usernem
+                        i/ili password. Potrebno je zadati id korisnika.</td>
+                    </tr>
+                    <tr>
+                        <td>Delete</td>
+                        <td>DELETE - ako su u zahtjevu podaci administratora,
+                            obrisu se svi ostali korisnici osim administratora
+                            zajedno s njihovim snippetima</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>/snippets/</td>
+            <td>
+                <table>
+                        <td>Create</td>
+                        <td>POST - stvara se novi snippet pod korisnikom ciji
+                            se podaci nalaze u zahtjevu. Potrebno je zadati
+                            naslov, jezik te izvorni tekst snippeta kao i
+                            login podatke korisnika</td>
+                    <tr>
+                        <td>Read</td>
+                        <td>GET - dohvaca se JSON objekt koji sadrzi sve
+                            snippete.</td>
+                    </tr>
+                    <tr>
+                        <td>Update</td>
+                        <td>PUT - snippetu ciji je id zadan promijene se naslov
+                        i/ili jezk i/ili izvorni tekst. Potrebno je da zahtjev
+                        sadrzi login podatke korisnika ciji se snippet mijenja</td>
+                    </tr>
+                    <tr>
+                        <td>Delete</td>
+                        <td>DELETE - brisu se svi snippeti iz sustava. Potrebno
+                        je navesti login podatke administratora.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>/users/X</td>
+            <td>
+                <table>
+                        <td>Create</td>
+                        <td>POST - metoda nije dozvoljena</td>
+                    <tr>
+                        <td>Read</td>
+                        <td>GET - dohvaca se JSON objekt koji sadrzi sve
+                            snippeta korisnika ciji je id zadan u pathu.</td>
+                    </tr>
+                    <tr>
+                        <td>Update</td>
+                        <td>PUT - mijenja se username i password korisniku ciji
+                        je id naveden u pathu. Potrebno je da je taj id jednak
+                        korisniku ciji se login podaci nalaze u zahtjevu.</td>
+                    </tr>
+                    <tr>
+                        <td>Delete</td>
+                        <td>DELETE - brisu se podaci o korisniku te svi njegovi
+                        snippeti. Potrebno je navesti podatke korisnika kojeg
+                        zelimo obrisati iz sustava u zahtjevu.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>/snippets/X</td>
+            <td>
+                <table>
+                        <td>Create</td>
+                        <td>POST - metoda nije dozvoljena</td>
+                    <tr>
+                        <td>Read</td>
+                        <td>GET - dohvaca JSON objekt s detaljima snippeta ciji
+                        se id nalazi u pathu</td>
+                    </tr>
+                    <tr>
+                        <td>Update</td>
+                        <td>PUT - snippetu ciji je id zadan u pathu  promijene 
+                        se naslov i/ili jezk i/ili izvorni tekst. Potrebno je 
+                        da zahtjev sadrzi login podatke korisnika ciji se 
+                        snippet mijenja</td>
+                    </tr>
+                    <tr>
+                        <td>Delete</td>
+                        <td>DELETE - snippet ciji se id nalazi u pathu se brise
+                        iz sustava</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
