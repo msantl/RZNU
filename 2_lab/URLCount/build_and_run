@@ -1,0 +1,30 @@
+#! /bin/bash
+
+# Starting hadoop:
+/usr/local/Cellar/hadoop/2.6.0/libexec/sbin/start-dfs.sh
+/usr/local/Cellar/hadoop/2.6.0/libexec/sbin/start-yarn.sh
+
+# Get classpath:
+classpath=$(/usr/local/Cellar/hadoop/2.6.0/libexec/bin/hadoop classpath)
+
+# Creating .jar file:
+javac -classpath $classpath -d classes *.java
+jar -cvf UrlCount.jar -C classes/ .
+
+# Delete out and stats.log file
+rm -rf out
+rm -rf /Users/msantl/Sites/env/RZNU/rznu/stats.log
+
+# Copy from local fs to hadoop fs:
+/usr/local/Cellar/hadoop/2.6.0/libexec/bin/hadoop fs -copyFromLocal /Users/msantl/Sites/env/RZNU/rznu/django.log log
+
+# Run UrlCount 
+/usr/local/Cellar/hadoop/2.6.0/libexec/bin/hadoop jar /Users/msantl/Desktop/RZNU/labos/2_lab/UrlCount/UrlCount.jar UrlCount log out
+
+# Copy to local fs from hadoop fs:
+/usr/local/Cellar/hadoop/2.6.0/libexec/bin/hadoop fs -copyToLocal out/part-00000 /Users/msantl/Sites/env/RZNU/rznu/stats.log 
+
+# Shutdown hadoop:
+/usr/local/Cellar/hadoop/2.6.0/libexec/sbin/stop-dfs.sh
+/usr/local/Cellar/hadoop/2.6.0/libexec/sbin/stop-yarn.sh
+

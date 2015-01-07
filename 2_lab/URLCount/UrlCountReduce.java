@@ -7,8 +7,9 @@ import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reducer;
 import org.apache.hadoop.mapred.Reporter;
 
-public class VideoCountReduce extends MapReduceBase
+public class UrlCountReduce extends MapReduceBase
     implements Reducer<Text, IntWritable, Text, IntWritable> {
+
     public void reduce(Text key, Iterator<IntWritable> values,
             OutputCollector<Text, IntWritable> output,
             Reporter reporter)
@@ -20,5 +21,4 @@ public class VideoCountReduce extends MapReduceBase
             count += 1; }
             output.collect(key, new IntWritable(count));
     }
-
 }

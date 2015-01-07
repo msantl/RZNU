@@ -7,8 +7,9 @@ import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reducer;
 import org.apache.hadoop.mapred.Reporter;
 
-public class VideoCountReduce extends MapReduceBase
+public class BrowserCountReduce extends MapReduceBase
     implements Reducer<Text, IntWritable, Text, IntWritable> {
+
     public void reduce(Text key, Iterator<IntWritable> values,
             OutputCollector<Text, IntWritable> output,
             Reporter reporter)
@@ -17,8 +18,9 @@ public class VideoCountReduce extends MapReduceBase
         int count = 0;
         while (values.hasNext()) {
             values.next();
-            count += 1; }
-            output.collect(key, new IntWritable(count));
+            count += 1;
+        }
+        output.collect(key, new IntWritable(count));
     }
 
 }
