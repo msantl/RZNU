@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if snippet %}
+<h2>{{ snippet.title }} by {{ snippet.user.username }}</h2>
+    <p>Language: {{ snippet.language }}</p>
+    <p>Date: {{ snippet.date }}</p>
+    <code>{{ snippet.source }}</code>
+    <hr />
+{% else %}
+<h1>Invalid snippet id!</h1>
+{% endif %}
+
+{% endblock %}

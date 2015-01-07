@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if snippet_list %}
+    <h1>All snippets</h1>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+        </tr>
+        {% for snippet in snippet_list %}
+        <tr>
+            <td><a href="{% url 'snippet_detail' snippet.id %}">{{ snippet.title }}</a></td>
+            <td>{{ snippet.user.username }}</td>
+            <td>{{ snippet.date }}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No snippets!</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if snippets %}
+    {% for snippet in snippets %}
+        <h2>{{ snippet.title }}</h2>
+        <p>Language: {{ snippet.language }}</p>
+        <p>Date: {{ snippet.date }}</p>
+        <code>{{ snippet.source }}</code>
+        <hr />
+    {% endfor %}
+{% else %}
+<h1>{{ username }} has no snippets</h1>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if stats %}
+    <h1>Hadoop statistics</h1>
+
+    <table>
+        <tr>
+            <th>URL/browser</th>
+            <th>times visited</th>
+        </tr>
+        {% for stat in stats %}
+        <tr>
+            <td>{{ stat.0 }}</td>
+            <td align="right">{{ stat.1 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    <p>No stats present!</p>
+{% endif %}
+
+{% endblock %}

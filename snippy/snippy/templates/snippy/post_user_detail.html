@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="post" action="/users/">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>New username:</td>
+            <td><input type="text" name="username" id="username" /></td>
+        </tr>
+        <tr>
+            <td>New password:</td>
+            <td><input type="text" name="password" id="password" /></td>
+        </tr>
+    </table>
+
+    <input type="submit" value="create" />
+</form>
+
+{% endblock %}

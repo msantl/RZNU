@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="post" action="/snippets/">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Author:</td>
+            <td>
+                <label for="user" >{{ user.username }}</label>
+                <input type="hidden" name="user" id="user" value="{{ user.id }}" />
+            </td>
+        </tr>
+        <tr>
+            <td>Title:</td>
+            <td><input type="text" name="title" id="title" /></td>
+        </tr>
+        </tr>
+        <tr>
+            <td>Language:</td>
+            <td><input type="text" name="language" id="language" /></td>
+        </tr>
+        </tr>
+        <tr>
+            <td>Source:</td>
+            <td><textarea name="source" id="source" rows=20 cols=80>Your code here...</textarea></td>
+        </tr>
+    </table>
+
+    <input type="submit" value="create" />
+</form>
+
+{% endblock %}
