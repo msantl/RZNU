@@ -28,3 +28,6 @@ rm -rf /Users/msantl/Sites/env/RZNU/rznu/stats.log
 /usr/local/Cellar/hadoop/2.6.0/libexec/sbin/stop-dfs.sh
 /usr/local/Cellar/hadoop/2.6.0/libexec/sbin/stop-yarn.sh
 
+# Delete out and log
+rm -rf out
+rm -rf log
