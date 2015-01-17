@@ -1,0 +1,93 @@
+Hadoop - radni okvir (framework); MapReduce - programski model
+HDFS - raspodijeljeni datotecni sustav
+--------------------------------------------------------------------
+
+Hadoop - programski sustav za analiziranje velikih kolicina podataka
+    koji se nalaze u pouzdanom i raspodijeljenom spremistu
+
+Hbase - raspodijeljena baza podataka razvijena po uzoru na BigTable
+    iz Googlea. ZooKeeper - pouzdani sustav za koordinaciju
+    raspodijeljenih primjenskih sustava.
+
+MapReduce - programski model za raspodijeljenu obradu podataka sa
+    svojstvom linearnog razmjernog rasta.
+    - sustav za izvrsavanje upita u pozadini
+
+ Funkcije:
+    1) Map - transparentno citanje podataka iz raspodijeljenog
+        datotecnog sustava, filtriranje i generiranje parova
+        kljuc - vrijednost
+
+    2) Reduce - obrada udruzenih i sortiranih parova generiranih
+        Map funkcijama te generiranje izlaza u obliku parova
+        kljuc-vrijednost
+
+    Ako sam dobro razumio:
+    1) Map funkcija procita raspodijeljene datoteke i primjerice,
+        za svaku rijec stvori (kljuc, vrijednost) par.
+    2) MapReduce interno te parove spoji u (kljuc, lista)
+    3) Reduce funkcija to pozbraja
+
+- funkcije map i reduce ne ovise o velicini ulaznog skupa podataka
+    niti o velicini spleta racunala na kojem se sustav izvrsava
+
+- MapReduce model zamisljen je za obradu nestrukturiranih ili
+    polustrukturiranih podataka
+
+HDFS
+- raspodijeljeni datotecni sustav za spremanje i slijedno citanje
+    vrlo velikih datoteka u spletu racunala
+- brzo sliejdno citanje
+- osigurava ispravan rad sustava bez obzira na prisutnost kvarova
+    ili gresaka u komunikaciji
+- sprema datoteke u raspodijeljeno spremiste u blokove od 64MB
+- velik blok zbog optimizacije vremena citanja
+- blokovi fiksne velicine -> jednostavnost ostvarenja i mogucnost
+    spremanja datoteka cija velicina nadmasuje kapacitet bilo
+    kog diska
+- dostupnost i otpornost sustava -> replikacija blokova 3 puta
+- Hadoop koristi dvije vrste cvorova u spletu:
+    1) cvor imenik za odrzavanje prostora imena
+    2) podatkovni cvor za spremanje blokova
+
+MapReduce
+Map : (K1, V1) -> list(K2, V2)
+Reduce : (K2, list(V2)) -> list(K3, V3)
+
+Podsustav za izvodjenje MapReduce programa u Hadoopu
+- glavni cvor - JobTracker
+- cvorovi radnici - TaskTracker
+- MapReduce program poslan na izvodjenje = job
+- job se dijeli u zadatke = task
+- Hadoop dijeli ulazne podatke u particije jednake velicine
+    koje se onda dodjeljuju Map funkcijama
+- Map funkcije vracaju parove kljuc-vrijednost koje Hadoop
+    udruzuje i sortira po kljucu
+- Kad su sve map funkcije gotove, reduce funkcije obavljaju
+    zadatke na tim podacima
+
+- Job se salje na izvodjenje koristeci Hadoop klijentsku
+    aplikaciju JobClient
+- JobClient trazi od JobTrackera novi jedinstveni identifikator posla
+    i izracunava particije ulaznih podataka
+- zatim JobClient kopira komponente posla u raspodijeljeni datotecni
+    sustav, od JAR-a preko config datoteka do ulaznih podataka
+- Job se potom sprema u interni red poslova
+- Job scheduler potom dohvaca posao i inicijalizira ga tako da 
+    inicijalizira Map funkcije (jednu po particiji ulaza) i Reduce
+    funkcije
+- JobTracker dodjeljuje zadatke koji cine pojedini posao
+    slobodnim radnicima
+- Radnik periodicki javlja svoje stanje JobTrackeru
+- optimizacije:
+    1) map zadaci pokusavaju se dodijeliti cvorovima radnicima
+        na kojima se vec nalaze podaci za taj zadatak
+    2) pokrece se vise map i reduce zadataka konkurentno na radnicima
+        (default 4, 2 map i 2 reduce)
+
+Oporavak od pogresaka
+- kad glavni cvor primi poruku s dojavom pogreske, on ponovo pokrece
+    neuspjesan zadatak (izbjegavajuci ga pokrenuti na istom cvoru)
+- ako glavni cvor ne primi periodicnu statusnu poruku, on brise
+    radnika iz skupa radnika za rasporedjivanje poslova
+        
